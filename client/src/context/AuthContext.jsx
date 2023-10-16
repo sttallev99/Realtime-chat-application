@@ -12,8 +12,15 @@ export const AuthContextProvider = ({ children }) => {
         email: '',
         password: ''
     });
+    const [loginError, setLoginError] = useState(null);
+    const [loginLoading, setLoginLoading] = useState(false);
+    const [loginInfo, setLoginInfo] = useState({
+        email: '',
+        password: ''
+    });
 
-    console.log('user', user)
+    // console.log('user', user)
+    console.log(loginInfo);
 
     useEffect(() => {
         const user = localStorage.getItem('user');
@@ -24,12 +31,15 @@ export const AuthContextProvider = ({ children }) => {
         setRegisterInfo(info);
     }, []);
 
+    const updateLoginInfo = useCallback((info) => {
+        setLoginInfo(info);
+    }, []);
+
     const registerUser = useCallback(async(e) => {
         e.preventDefault();
         
         setRegisterLoading(true);
         setRegisterError(null);
-        console.log(registerInfo)
         const res = await postRequest(`${baseURL}/users/register`, registerInfo);
         setRegisterLoading(false);
 
@@ -39,6 +49,23 @@ export const AuthContextProvider = ({ children }) => {
         localStorage.setItem('user', JSON.stringify(res));
         setUser(res);
     }, [registerInfo]);
+
+    const loginUser = useCallback(async(e) => {
+        e.preventDefault()
+        setLoginError(null);
+        setLoginLoading(true);
+        const res = await postRequest(`${baseURL}/users/login`, loginInfo);
+        setLoginLoading(false);
+        if(res.error) {
+            return setLoginError(res);
+        }
+        localStorage.setItem('user', JSON.stringify(res));
+        setLoginInfo({
+            email: '',
+            password: ''
+        })
+        return setUser(res);
+    }, [loginInfo]);
 
     const logoutUser = useCallback(() => {
         localStorage.removeItem('user');
@@ -52,7 +79,12 @@ export const AuthContextProvider = ({ children }) => {
         registerUser, 
         registerError, 
         registerLoading,
-        logoutUser
+        logoutUser,
+        loginUser,
+        loginError,
+        loginInfo,
+        updateLoginInfo,
+        loginLoading
         }}>
         {children}
     </AuthContext.Provider>
