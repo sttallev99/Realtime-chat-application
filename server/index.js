@@ -4,6 +4,7 @@ const { mongoose } = require('mongoose');
 require('dotenv').config();
 
 const userRoute = require('./Routes/userRoute');
+const chatRoute = require('./Routes/chatRoute');
 
 const app = express();
 
@@ -13,7 +14,9 @@ app.use(cors());
 app.get('/', (req, res) => {
     res.json({welcomeString: 'Welcome to our chat app APIs'})
 });
-app.use('/api/users', userRoute)
+
+app.use('/api/users', userRoute);
+app.use('/api/chats', chatRoute)
 
 const port = process.env.PORT;
 
