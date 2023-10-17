@@ -8,11 +8,13 @@ import Login from './pages/Login';
 import Navigation from './components/Navigation';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
+import { ChatContextProvider } from './context/ChatContext';
 
 function App() {
-  const {user} = useContext(AuthContext)
+  const {user} = useContext(AuthContext);
+
   return (
-    <>
+    <ChatContextProvider user={user}>
     <Navigation />
     <Container className="">
       <Routes>
@@ -22,7 +24,7 @@ function App() {
         <Route path='*' element={<Navigate to='/' />} />
       </Routes>
     </Container>
-    </>
+    </ChatContextProvider>
   );
 }
 
