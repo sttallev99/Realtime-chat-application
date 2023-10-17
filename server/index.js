@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const userRoute = require('./Routes/userRoute');
 const chatRoute = require('./Routes/chatRoute');
+const messageRoute = require('./Routes/messageRoute');
 
 const app = express();
 
@@ -16,7 +17,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/users', userRoute);
-app.use('/api/chats', chatRoute)
+app.use('/api/chats', chatRoute);
+app.use('/api/messages', messageRoute);
 
 const port = process.env.PORT;
 
