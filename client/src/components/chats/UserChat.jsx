@@ -14,7 +14,7 @@ export default function UserChat(chat, user) {
                 <img src={avatar} height='35px' />
             </div>
             <div className="text-content">
-                <div className="name">{recipientUser.name}</div>
+                <div className="name">{recipientUser?.name}</div>
                 <div className="text">Text Message</div>
             </div>
         </div>
