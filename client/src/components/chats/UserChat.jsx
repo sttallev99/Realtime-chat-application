@@ -4,7 +4,7 @@ import { Stack } from 'react-bootstrap';
 import { useFetchRecipient } from '../../hooks/useFetchRecipient';
 import avatar from '../../assets/avatar.svg'
 
-export default function UserChat(chat, user) {
+export default function UserChat({chat, user}) {
     const {recipientUser} = useFetchRecipient(chat, user);
 
   return (

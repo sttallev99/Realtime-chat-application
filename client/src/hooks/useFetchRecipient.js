@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 
 import { baseURL, getRequest } from "../utils/services";
 
-export const useFetchRecipient = ({chat, user}) => {
+export const useFetchRecipient = (chat, user) => {
     const [error, setError] = useState(null);
     const [recipientUser, setRecipientUser] = useState(null);
 
-    const recipientId = chat?.members.find((id) => id !== user._id);
+    const recipientId = chat?.members?.find((id) => id !== user?._id);
 
     useEffect(() => {
         const getUser = async() => {
@@ -22,7 +22,7 @@ export const useFetchRecipient = ({chat, user}) => {
         }
 
         getUser();
-    }, []);
+    }, [recipientId]);
 
     return { recipientUser }
 };
